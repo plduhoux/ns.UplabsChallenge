@@ -10,7 +10,7 @@
 
 		<ScrollView class="anim-images" orientation="horizontal" >
 			<StackLayout orientation="horizontal" class="">
-					<GridLayout v-for="image in item.images" rows="auto" columns="*"> 
+					<GridLayout v-for="(image, i) in item.images" :key="i" rows="auto" columns="*"> 
 							<Image class="card-img-thumb" row="0" col="0" :src="image.src" stretch="aspectFill"/>							
 					</GridLayout> 
 			</StackLayout>
@@ -74,6 +74,19 @@
 			<StackLayout row="1">
 				<ScrollView>
 					<StackLayout verticalAlignment="top" horizontalAlignment="left">
+						<RadPieChart height="200" allowAnimation="true">
+							<PieSeries v-tkPieSeries
+								selectionMode="DataPoint"
+								:items="repartition"
+								outerRadiusFactor="0.9"
+								valueProperty="value"
+								legendLabel="title"
+								showLabels="false">
+								</PieSeries>
+							<RadLegendView v-tkCartesianLegend
+								position="Right"
+								width="120" />
+						</RadPieChart>
 						<Textview editable="false" class="description-value"  textWrap="true" :text="description" />
 					</StackLayout>
 				</ScrollView>
@@ -223,6 +236,12 @@
 		},
 		data() {
 			return {
+				repartition: [
+					{title: "Lipids", value: 14},
+					{title: "Cholesterol", value: 1},
+					{title: "Glucids", value: 24},
+					{title: "Proteins", value: 17}
+				],
 				images: null,
 				isLike: false,
 				isHeart: false,
